@@ -1,16 +1,19 @@
-<%= form_with url: search_forecasts_path, method: :get do |form| %>
+<%= form_with url: search_forecasts_path, method: :get, data: { controller: "autocomplete" } do |f| %>
   <div class="field">
-    <%= form.label :address, "Search term" %>
+    <%= f.label :address, "Search term" %>
     <%=
-      form.text_field :address,
-                      id: "address-autocomplete",
-                      placeholder: "Start typing an address...",
-                      data: { controller: "address-autocomplete" }
+      f.text_field :address,
+                   id: "autocomplete",
+                   placeholder: "Start typing an address...",
+                   data: { autocomplete_target: "searchTerm" }
     %>
+
+    <%= f.hidden_field :latitude, data: { autocomplete_target: "latitude" } %>
+    <%= f.hidden_field :longitude, data: { autocomplete_target: "longitude" } %>
   </div>
 
   <div class="actions">
-    <%= form.submit "Search" %>
+    <%= f.submit "Search" %>
   </div>
 <% end %>
 
