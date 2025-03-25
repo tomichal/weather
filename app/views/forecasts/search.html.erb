@@ -1,4 +1,4 @@
-<%= form_with url: search_forecasts_path, method: :get, data: { controller: "autocomplete" } do |f| %>
+<%= form_with url: search_forecasts_path, method: :get, data: { controller: "autocomplete", action: "submit->autocomplete#beforeSubmit" } do |f| %>
   <div class="field">
     <%= f.label :address, "Search term" %>
     <%=
@@ -17,8 +17,8 @@
   </div>
 <% end %>
 
-<% if @address.blank? %>
+<% if @lat.blank? %>
   <strong>Type in address to get forecast for...</strong>
 <% else %>
-  <h2>Weather forecast for <%= @address %></h2>
+  <h2>Weather forecast for <%= @lat %>, <%= @lng %></h2>
 <% end %>
