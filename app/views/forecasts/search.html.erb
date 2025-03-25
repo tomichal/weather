@@ -1,10 +1,16 @@
 <%= form_with url: search_forecasts_path, method: :get do |form| %>
-    <div class="field">
-        <%= form.label :query, "Search term" %>
-        <%= form.text_field :query, placeholder: "Enter search term" %>
-    </div>
+  <div class="field">
+    <%= form.label :query, "Search term" %>
+    <%= form.text_field :query, placeholder: "Enter search term" %>
+  </div>
 
-    <div class="actions">
-        <%= form.submit "Search" %>
-    </div>
+  <div class="actions">
+    <%= form.submit "Search" %>
+  </div>
+<% end %>
+
+<% if @query.blank? %>
+  <strong>Type in address to get forecast for...</strong>
+<% else %>
+  <h2>Weather forecast for <%= @query %></h2>
 <% end %>
