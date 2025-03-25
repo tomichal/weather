@@ -1,8 +1,13 @@
-<%= form_with url: search_forecasts_path, method: :get, data: { controller: "autocomplete", action: "submit->autocomplete#beforeSubmit" } do |f| %>
-  <div class="field">
-    <%= f.label :address, "Search term" %>
+<%= form_with model: @search_query,
+              url: search_forecasts_path,
+              method: :get,
+              data: {
+                controller: "autocomplete",
+                action: "submit->autocomplete#beforeSubmit"
+              } do |f| %>
+  <div class="field" style="display: flex; justify-content: flex-start">
     <%=
-      f.text_field :address,
+      f.text_field :formatted_address,
                    id: "autocomplete",
                    placeholder: "Start typing an address...",
                    data: { autocomplete_target: "searchTerm" }
@@ -10,15 +15,18 @@
 
     <%= f.hidden_field :latitude, data: { autocomplete_target: "latitude" } %>
     <%= f.hidden_field :longitude, data: { autocomplete_target: "longitude" } %>
-  </div>
 
-  <div class="actions">
     <%= f.submit "Search" %>
   </div>
+
 <% end %>
 
-<% if @lat.blank? %>
+<% if @search_query.blank? %>
   <strong>Type in address to get forecast for...</strong>
 <% else %>
-  <h2>Weather forecast for <%= @lat %>, <%= @lng %></h2>
+  <h2>
+    Weather forecast for
+    <%= @search_query.formatted_address %> at<br/>
+    <%= @search_query.latitude %>, <%= @search_query.longitude %>
+  </h2>
 <% end %>
