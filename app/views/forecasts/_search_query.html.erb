@@ -1,0 +1,25 @@
+<%= form_with model: search_query,
+              url: forecasts_path,
+              method: :get,
+              data: {
+                controller: "autocomplete",
+                action: "submit->autocomplete#beforeSubmit"
+              } do |f| %>
+  <div class="control has-icons-right">
+    <%=
+      f.text_field :formatted_address,
+                   id: "autocomplete",
+                   class: "input is-primary",
+                   placeholder: "Start typing an address...",
+                   data: { autocomplete_target: "searchTerm" }
+    %>
+    <span class="icon is-small is-right">
+      <%= icon('fa-solid', 'search') %>
+    </span>
+
+    <%= f.hidden_field :latitude, data: { autocomplete_target: "latitude" } %>
+    <%= f.hidden_field :longitude, data: { autocomplete_target: "longitude" } %>
+
+    <%= f.submit "Search", style: "display: none" %>
+  </div>
+<% end %>

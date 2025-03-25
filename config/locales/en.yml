@@ -28,4 +28,9 @@
 #       enabled: "ON"
 
 en:
-  hello: "Hello world"
+  time:
+    formats:
+      default: "%b %d at %l:%M%P"
+  date:
+    formats:
+      default: "%b %d"

@@ -1,0 +1,28 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "a0d919a3c197c7229b1e7490c1e94a263412b808d6216eca1ef44c68415b7e64",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/controllers/forecasts_controller.rb",
+      "line": 7,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "AccuLocation.find_by(\"#{SearchQuery.new(search_query_params).latitude},#{SearchQuery.new(search_query_params).longitude}\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "ForecastsController",
+        "method": "index"
+      },
+      "user_input": "SearchQuery.new(search_query_params).latitude",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ],
+      "note": ""
+    }
+  ],
+  "brakeman_version": "7.0.0"
+}

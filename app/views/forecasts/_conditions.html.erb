@@ -1,0 +1,23 @@
+<div class="column">
+  <%= l conditions.starts_at, format: :default %>
+</div>
+
+<div class="column is-one-fifth">
+  <% if conditions.weather_icon.present? %>
+    <img src="https://developer.accuweather.com/sites/default/files/<%= "%02d" % conditions.weather_icon %>-s.png">
+  <% else %>
+    <span><%= conditions.weather_text %></span>
+  <% end %>
+</div>
+
+<div class="column">
+  <span class="mr-1"><%= icon 'fa-solid', 'temperature-full' %></span>
+  <%= conditions.temperature %><%= conditions.temperature_unit %>
+</div>
+
+<div class="column">
+  <span class="mr-1"><%= icon 'fa-solid', 'wind' %></span>
+  <%= conditions.wind_speed %>
+  <%= conditions.wind_unit %>
+  <%= conditions.wind_direction %>
+</div>

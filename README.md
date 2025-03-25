@@ -1,42 +1,96 @@
-# README
-Coding Assignment
+# Summary
+This is a weather app with address autocomplete search bar. 
+Current conditions and 5 day forecast are pulled and cached (using Rails solid cache) for 30 minutes for the requested location.
+The address autocomplete is implemented using Google Maps API.
+Weather is pulled from the Accuweather API.
+API keys are stored using Rails credentials.
+Rails master key is required for that to work.
 
-Requirements:
-•	Accept an address as input
-•	Retrieve forecast data for the given address. This should include, at minimum, the current temperature (Bonus points - Retrieve high/low and/or extended forecast)
-•	Display the requested forecast details to the user
-•	Cache the forecast details for 30 minutes for all subsequent requests by zip codes. Display indicator if result is pulled from cache.
+For the sake of simplicity I implemented the back-end and UI using a single Rails app, instead of making it two projects (JSON API and a front-end UI e.g. written in React), so please let me know if implementing a JSON API was a crucial part of this assignment (it was not mentioned in the description). 
 
-Assumptions:
-•	This project is open to interpretation
-•	Functionality is a priority over form
-•	If you get stuck, complete as much as you can
+**IMPORTANT**
+1. Ensure the Rails master key is set in the env var `RAILS_MASTER_KEY` or `config/master.key` file.
+    The master key should have been sent separately in the email to the recruiter along with the project repo information.
+2. The free version of the Accuweather API has a limitation of 50 requests per day, so hopefully that will not be exceeded during the evaluation of this project.
 
-Submission:
-•	Use a public source code repository (GitHub, etc) to store your code
-•	Send us the link to your completed code
+## Example of how the app looks like
+<img src="screenshot.png" alt="screenshot" width="500">
 
 
+## Run the app locally
+**NOTE**: I wasn't sure how important docker setup was for this submission, but happy to provide it. 
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+```
+cd weather
+bundle install
+bin/setup # or bin/dev for consecutive runs
+open localhost:3000
+```
 
-Things you may want to cover:
+## Run the tests
+```
+cd weather
+bin/rails spec
+```
 
-* Ruby version
 
-* System dependencies
+# Main files forming part of this submission
+## Application
+```
+# Controllers
+app/controllers/forecasts_controller.rb
+app/javascript/controllers/autocomplete_controller.js
 
-* Configuration
+# Models
+app/models/search_query.rb
+app/models/accu_location.rb
+app/models/accu_condition.rb
+app/models/accu_daily_forecast.rb
+app/models/concerns/remote_api_model.rb
 
-* Database creation
+# Views
+app/views/forecasts/_conditions.html.erb
+app/views/forecasts/_search_query.html.erb
+app/views/forecasts/search.html.erb
+app/views/layouts/application.html.erb
+```
 
-* Database initialization
+## Tests
+```
+# Unit
+spec/models/accu_location_spec.rb
+spec/models/accu_condition_spec.rb
 
-* How to run the test suite
+# Request
+spec/requests/forecasts_spec.rb
 
-* Services (job queues, cache servers, search engines, etc.)
+# Feature
+spec/features/forecasts_spec.rb
 
-* Deployment instructions
+# Factories
+spec/factories/accu_conditions.rb
+spec/factories/accu_daily_forecast.rb
+spec/factories/accu_locations.rb
 
-* ...
+# VCR fixtures for replaying the weather API interactions
+spec/fixtures/vcr_cassettes/accu_locations/find_by_coordinates.yml
+spec/fixtures/vcr_cassettes/accu_locations/conditions.yml
+spec/fixtures/vcr_cassettes/accu_conditions/daily_forecasts.yml
+spec/fixtures/vcr_cassettes/forecasts/index.yml
+
+# Tests helper code
+spec/vcr_helper.rb
+spec/helpers/cache_helper.rb
+spec/rails_helper.rb
+spec/spec_helper.rb
+```
+
+## Diagram
+Below is a simple objects diagram.
+Weather domain objects are implemented using ActiveModel features with API interactions implemented in the RemoteAPIModel module.
+
+![design.png](design.png)
+
+# Potential improvements
+* Use ActionCable to refresh the forecast without needing to reload the browser window.
+* Pull weather from multiple sources and incorporate the differences in the UI. E.g.: show where the forecasts are radically different?
