@@ -1,7 +1,7 @@
 class ForecastsController < ApplicationController
 
   def search
-    @query = params[:query]
+    @address = params[:address]
   end
 
 end

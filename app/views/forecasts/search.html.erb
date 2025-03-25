@@ -1,7 +1,12 @@
 <%= form_with url: search_forecasts_path, method: :get do |form| %>
   <div class="field">
-    <%= form.label :query, "Search term" %>
-    <%= form.text_field :query, placeholder: "Enter search term" %>
+    <%= form.label :address, "Search term" %>
+    <%=
+      form.text_field :address,
+                      id: "address-autocomplete",
+                      placeholder: "Start typing an address...",
+                      data: { controller: "address-autocomplete" }
+    %>
   </div>
 
   <div class="actions">
@@ -9,8 +14,8 @@
   </div>
 <% end %>
 
-<% if @query.blank? %>
+<% if @address.blank? %>
   <strong>Type in address to get forecast for...</strong>
 <% else %>
-  <h2>Weather forecast for <%= @query %></h2>
+  <h2>Weather forecast for <%= @address %></h2>
 <% end %>
