@@ -3,8 +3,6 @@
 * Safe google maps api key? config/importmap.rb:10
 
 # README
-Coding Assignment
-
 Requirements:
 •	Accept an address as input
 •	Retrieve forecast data for the given address. This should include, at minimum, the current temperature (Bonus points - Retrieve high/low and/or extended forecast)
@@ -23,7 +21,7 @@ Submission:
 •	Send us the link to your completed code
 
 
-
+# Other
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
