@@ -14,7 +14,7 @@
                    data: { autocomplete_target: "searchTerm" }
     %>
     <span class="icon is-small is-right">
-      <%= icon('fa-regular', 'search') %>
+      <%= icon('fa-solid', 'search') %>
     </span>
 
     <%= f.hidden_field :latitude, data: { autocomplete_target: "latitude" } %>
@@ -24,33 +24,50 @@
   </div>
 <% end %>
 
-<% if @search_query.blank? %>
-  <strong>Type in address to get forecast for...</strong>
-<% else %>
-  <h3>
-    Weather forecast for
-    <%= @search_query.formatted_address %> at<br/>
-    <%= @search_query.latitude %>, <%= @search_query.longitude %>
-  </h3>
-
-  <div>
+<div class="container pt-4">
+  <% if !@search_query.valid? %>
+    <%= icon 'fa-solid', 'info' %>
+    <span>Type in address to get forecast for.</span>
+  <% else %>
     <% if @location.present? %>
-      <p>
-        AccuWeather location: <%= @location.id %>, <%= @location.primary_postal_code %>, <%= @location.country %>
-      </p>
       <% if @condition.present? %>
-        <p>
-          <% if @condition.weather_icon.present? %>
-            <img class="icon" src="https://developer.accuweather.com/sites/default/files/<%= "%02d" % @condition.weather_icon %>-s.png">
-          <% end %>
-          <%= @condition.weather_text %><br/>
-          <%= @condition.is_cached %>
-        </p>
+        <div class="mb-2">
+          <%= icon 'fa-solid', 'map' %>
+          <%= @location.primary_postal_code %>, <%= @location.country %>
+          <span class="ml-4 mr-2">
+            <% if @condition.is_cached %>
+              <%= icon 'fa-solid', 'database mr-1' %>(cached)
+            <% end %>
+            <span>Observed at: <%= last_fetched_at(@condition) %></span>
+          </span>
+        </div>
+
+        <div class="mt-6">
+          <h2 class="subtitle">Current conditions</h2>
+          <div style="display: flex; align-items: center;">
+
+            <% if @condition.weather_icon.present? %>
+              <img class="mr-3" src="https://developer.accuweather.com/sites/default/files/<%= "%02d" % @condition.weather_icon %>-s.png">
+            <% else %>
+              <span class="mr-3"><%= @condition.weather_text %></span>
+            <% end %>
+            <span class="mr-3">
+              <%= icon 'fa-solid', 'temperature-full' %>
+              <%= @condition.temperature %><%= @condition.temperature_unit %>
+            </span>
+            <span>
+              <%= icon 'fa-solid', 'wind' %>
+              <%= @condition.wind_speed %>
+              <%= @condition.wind_unit %>
+              <%= @condition.wind_direction %>
+            </span>
+          </div>
+        </div>
       <% else %>
         No forecast found for this location.
       <% end %>
     <% else %>
       Location for the forecast can't be found.
     <% end %>
-  </div>
-<% end %>
+  <% end %>
+</div>

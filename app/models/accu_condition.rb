@@ -6,11 +6,11 @@ class AccuCondition
   attribute :observation_at, :datetime
   attribute :weather_text, :string
   attribute :weather_icon, :integer
-  attribute :has_precipitation, :boolean
-  attribute :precipitation_type, :string
-  attribute :is_day_time, :boolean
   attribute :temperature, :float
   attribute :temperature_unit, :string
+  attribute :wind_speed, :float
+  attribute :wind_unit, :string
+  attribute :wind_direction, :string
 
   validates :observation_at, presence: true
   validates :weather_text, presence: true
@@ -30,8 +30,11 @@ class AccuCondition
         observation_at: Time.at(data[:epoch_time]).to_datetime,
         weather_text: data[:weather_text],
         weather_icon: data[:weather_icon],
-        temperature: data[:temperature][:imperial][:value],
-        temperature_unit: data[:temperature][:imperial][:unit],
+        temperature: data.dig(:temperature, :imperial, :value),
+        temperature_unit: data.dig(:temperature, :imperial, :unit),
+        wind_speed: data.dig(:wind, :speed, :imperial, :value),
+        wind_unit: data.dig(:wind, :speed, :imperial, :unit),
+        wind_direction: data.dig(:wind, :direction, :localized),
       )
     end
   end
