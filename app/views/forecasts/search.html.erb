@@ -24,9 +24,17 @@
 <% if @search_query.blank? %>
   <strong>Type in address to get forecast for...</strong>
 <% else %>
-  <h2>
+  <h3>
     Weather forecast for
     <%= @search_query.formatted_address %> at<br/>
     <%= @search_query.latitude %>, <%= @search_query.longitude %>
-  </h2>
+  </h3>
+
+  <h3>
+    <% if @accu_location.present? %>
+      AccuWeather location: <%= @accu_location.key %>, <%= @accu_location.primary_postal_code %>, <%= @accu_location.country %>
+    <% else %>
+      Location for the forecast can't be found.
+    <% end %>
+  </h3>
 <% end %>
