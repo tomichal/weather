@@ -32,12 +32,7 @@ module RemoteApiModel
     def where(params: {}, cache_key: nil)
       raise "Invalid search parameters" unless params[:id].present?
 
-      records = from_api("#{self::API_HOST}/#{self::API_PATH}/#{params[:id]}", params: { details: true }, data_key: "DailyForecasts", cache_key:)
-
-      return unless records.present?
-
-      records.each { |r| r.id = params[:id] }
-      records
+      from_api("#{self::API_HOST}/#{self::API_PATH}/#{params[:id]}", params: { details: true }, data_key: "DailyForecasts", cache_key:)
     end
 
     private

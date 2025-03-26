@@ -24,6 +24,7 @@ class AccuDailyForecast
 
     def from_api_data(data)
       new(
+        id: data[:epoch_date],
         starts_at: Time.at(data[:epoch_date]).to_datetime,
         weather_icon: data.dig(:day, :icon),
         weather_text: data.dig(:day, :icon_phrase),
