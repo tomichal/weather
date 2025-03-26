@@ -7,7 +7,7 @@
   <% else %>
     <% if @location.present? %>
       <% if @conditions.present? %>
-        <div class="mb-2">
+        <div class="mb-6">
           <%= icon 'fa-solid', 'map' %>
           <%= @location.primary_postal_code %>, <%= @location.country %>
           <span class="ml-4 mr-2">
@@ -17,31 +17,27 @@
           </span>
         </div>
 
-        <div class="mt-4">&nbsp;</div>
-        <div class="mt-6">
+        <div class="pt-6">
           <h3 class="subtitle">
-            Current conditions
+            Current Conditions
           </h3>
-          <div class="align-items-center">
-            <%= render 'conditions', conditions: @conditions %>
-          </div>
-        </div>
-
-        <div class="mt-6">
-          <h3 class="subtitle">
-            <%= icon 'fa-solid', 'calendar-days' %>
-            Daily forecasts
-          </h3>
-          <div class="align-items-center">
+          <div>
+            <div class="columns align-items-center mb-5">
+              <%= render 'conditions', conditions: @conditions %>
+            </div>
+            <h3 class="subtitle">
+              <%= @conditions.daily_forecasts.size %> Day Forecast
+            </h3>
             <ul>
               <% @conditions.daily_forecasts.each do |forecast| %>
-                <li class="mb-2 align-items-center">
+                <li class="mb-2 columns align-items-center">
                   <%= render 'conditions', conditions: forecast %>
                 </li>
               <% end %>
             </ul>
           </div>
         </div>
+
       <% else %>
         No forecast found for this location.
       <% end %>

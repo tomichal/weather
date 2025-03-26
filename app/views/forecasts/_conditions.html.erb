@@ -1,21 +1,23 @@
-<span class="mr-4">
+<div class="column is-one-fourth">
   <%= l conditions.starts_at, format: :default %>
-</span>
+</div>
 
-<% if conditions.weather_icon.present? %>
-  <img class="mr-3" src="https://developer.accuweather.com/sites/default/files/<%= "%02d" % conditions.weather_icon %>-s.png">
-<% else %>
-  <span class="mr-3"><%= conditions.weather_text %></span>
-<% end %>
+<div class="column is-one-fifth">
+  <% if conditions.weather_icon.present? %>
+    <img src="https://developer.accuweather.com/sites/default/files/<%= "%02d" % conditions.weather_icon %>-s.png">
+  <% else %>
+    <span><%= conditions.weather_text %></span>
+  <% end %>
+</div>
 
-<span class="mr-3">
-  <%= icon 'fa-solid', 'temperature-full' %>
+<div class="column">
+  <span class="mr-1"><%= icon 'fa-solid', 'temperature-full' %></span>
   <%= conditions.temperature %><%= conditions.temperature_unit %>
-</span>
+</div>
 
-<span>
-  <%= icon 'fa-solid', 'wind' %>
+<div class="column">
+  <span class="mr-1"><%= icon 'fa-solid', 'wind' %></span>
   <%= conditions.wind_speed %>
   <%= conditions.wind_unit %>
   <%= conditions.wind_direction %>
-</span>
+</div>

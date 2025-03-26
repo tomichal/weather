@@ -1,7 +1,7 @@
 @use "bulma";
 @use "font-awesome" with ($fa-font-path: "font-awesome");
 
-.align-items-center {
+.align-items-center .column {
   display: flex;
   align-items: center;
 }
