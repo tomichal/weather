@@ -1,3 +1,2 @@
-body {
-  font-family: sans-serif;
-}
+@use "bulma";
+@use "font-awesome" with ($fa-font-path: "font-awesome");

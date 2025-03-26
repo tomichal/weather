@@ -25,22 +25,6 @@ class AccuCondition
       result.is_a?(Array) ? result.first : result
     end
 
-    #   attribute :has_precipitation, :boolean
-    #   attribute :precipitation_type, :string
-    #   attribute :is_day_time, :boolean
-    #   attribute :temperature, :float
-    #   attribute :temperature_unit, :string
-    #
-    #   #   "HasPrecipitation": false,
-    #   # "PrecipitationType": null,
-    #   # "IsDayTime": true,
-    #   # "Temperature": {
-    #   #   "Metric": {
-    #   #     "Value": 24.1,
-    #   #     "Unit": "C",
-    #   #     "UnitType": 17
-    #   #   },
-    #   # },
     def from_api_data(data)
       new(
         observation_at: Time.at(data[:epoch_time]).to_datetime,

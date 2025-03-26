@@ -5,20 +5,23 @@
                 controller: "autocomplete",
                 action: "submit->autocomplete#beforeSubmit"
               } do |f| %>
-  <div class="field" style="display: flex; justify-content: flex-start">
+  <div class="control has-icons-right">
     <%=
       f.text_field :formatted_address,
                    id: "autocomplete",
+                   class: "input is-primary",
                    placeholder: "Start typing an address...",
                    data: { autocomplete_target: "searchTerm" }
     %>
+    <span class="icon is-small is-right">
+      <%= icon('fa-regular', 'search') %>
+    </span>
 
     <%= f.hidden_field :latitude, data: { autocomplete_target: "latitude" } %>
     <%= f.hidden_field :longitude, data: { autocomplete_target: "longitude" } %>
 
-    <%= f.submit "Search" %>
+    <%= f.submit "Search", style: "display: none" %>
   </div>
-
 <% end %>
 
 <% if @search_query.blank? %>
@@ -38,7 +41,7 @@
       <% if @condition.present? %>
         <p>
           <% if @condition.weather_icon.present? %>
-            <img class="icon" src="https://developer.accuweather.com/sites/default/files/<%=  "%02d" % @condition.weather_icon %>-s.png">
+            <img class="icon" src="https://developer.accuweather.com/sites/default/files/<%= "%02d" % @condition.weather_icon %>-s.png">
           <% end %>
           <%= @condition.weather_text %><br/>
           <%= @condition.is_cached %>
