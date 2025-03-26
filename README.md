@@ -1,3 +1,7 @@
+# TODO
+* Safe accuweather api key? 
+* Safe google maps api key? config/importmap.rb:10
+
 # README
 Coding Assignment
 
