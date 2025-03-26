@@ -1,6 +1,6 @@
 # TODO
-* Extract the views partials 
 * Tests
+  * use vcr gem
 * Squash all commits before sharing the repo
 * Safe accuweather api key? 
 * Safe google maps api key? config/importmap.rb:10
