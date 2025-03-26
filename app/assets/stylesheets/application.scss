@@ -1,2 +1,7 @@
 @use "bulma";
 @use "font-awesome" with ($fa-font-path: "font-awesome");
+
+.align-items-center {
+  display: flex;
+  align-items: center;
+}

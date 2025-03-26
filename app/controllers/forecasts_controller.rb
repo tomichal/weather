@@ -10,7 +10,7 @@ class ForecastsController < ApplicationController
         condition_cache_key = "/#{AccuCondition.model_name.collection}/#{@location.primary_postal_code}"
         is_cached = Rails.cache.exist?(condition_cache_key)
         @condition = Rails.cache.fetch(condition_cache_key, expires_in: 30.minutes) do
-          AccuCondition.find(@location.id)
+          AccuCondition.find(@location.id).tap { |c| c.daily_forecasts }
         end
         @condition.is_cached = is_cached
       end

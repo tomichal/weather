@@ -3,7 +3,8 @@ require 'http'
 class AccuCondition
   include ApiModel
 
-  attribute :observation_at, :datetime
+  attribute :id, :string
+  attribute :starts_at, :datetime
   attribute :weather_text, :string
   attribute :weather_icon, :integer
   attribute :temperature, :float
@@ -12,7 +13,7 @@ class AccuCondition
   attribute :wind_unit, :string
   attribute :wind_direction, :string
 
-  validates :observation_at, presence: true
+  validates :starts_at, presence: true
   validates :weather_text, presence: true
   validates :temperature, presence: true
   validates :temperature_unit, presence: true
@@ -22,12 +23,14 @@ class AccuCondition
   class << self
     def find(id)
       result = from_api("#{self::API_HOST}/#{API_PATH}/#{id}", { details: true })
-      result.is_a?(Array) ? result.first : result
+      result = result.is_a?(Array) ? result.first : result
+      result.id = id
+      result
     end
 
     def from_api_data(data)
       new(
-        observation_at: Time.at(data[:epoch_time]).to_datetime,
+        starts_at: Time.at(data[:epoch_time]).to_datetime,
         weather_text: data[:weather_text],
         weather_icon: data[:weather_icon],
         temperature: data.dig(:temperature, :imperial, :value),
@@ -37,5 +40,9 @@ class AccuCondition
         wind_direction: data.dig(:wind, :direction, :localized),
       )
     end
+  end
+
+  def daily_forecasts
+    @daily_forecasts ||= AccuDailyForecast.where(id: id)
   end
 end
