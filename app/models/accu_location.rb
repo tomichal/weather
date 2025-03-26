@@ -21,17 +21,8 @@ class AccuLocation
   class << self
     def find_by(query)
       response = client.get("#{self::API_HOST}/#{API_PATH}", params: { q: query, apikey: self::API_KEY })
-
-      if response.status.success?
-        data = response.parse(:json)
-        if data.is_a?(Array)
-          data.map { |location_data| from_api(location_data) }
-        else
-          from_api(data)
-        end
-      else
-        raise "API search request failed: #{response.status} - #{response.body}"
-      end
+      result = from_response(response)
+      result.is_a?(Array) ? result.first : result
     end
 
     # Optional: If you need to handle timeout or other HTTP options

@@ -22,17 +22,10 @@ class AccuCondition
   class << self
     def find(id)
       response = client.get("#{self::API_HOST}/#{API_PATH}/#{id}", params: { apikey: self::API_KEY })
-
-      if response.status.success?
-        data = response.parse(:json)
-        data = data.first if data.is_a?(Array)
-        from_api(data)
-      else
-        raise "API search request failed: #{response.status} - #{response.body}"
-      end
+      result = from_response(response)
+      result.is_a?(Array) ? result.first : result
     end
 
-    # Optional: If you need to handle timeout or other HTTP options
     def client
       HTTP.timeout(connect: 5, read: 10)
           .use(:auto_inflate)
