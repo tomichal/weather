@@ -23,24 +23,7 @@
             Current conditions
           </h3>
           <div class="align-items-center">
-            <span class="mr-4">
-              <%= @conditions.starts_at.strftime("%Y-%m-%d %H:%M %p") %>
-            </span>
-            <% if @conditions.weather_icon.present? %>
-              <img class="mr-3" src="https://developer.accuweather.com/sites/default/files/<%= "%02d" % @conditions.weather_icon %>-s.png">
-            <% else %>
-              <span class="mr-3"><%= @conditions.weather_text %></span>
-            <% end %>
-            <span class="mr-3">
-              <%= icon 'fa-solid', 'temperature-full' %>
-              <%= @conditions.temperature %><%= @conditions.temperature_unit %>
-            </span>
-            <span>
-              <%= icon 'fa-solid', 'wind' %>
-              <%= @conditions.wind_speed %>
-              <%= @conditions.wind_unit %>
-              <%= @conditions.wind_direction %>
-            </span>
+            <%= render 'conditions', conditions: @conditions %>
           </div>
         </div>
 
@@ -49,31 +32,11 @@
             <%= icon 'fa-solid', 'calendar-day' %>
             Daily forecasts
           </h3>
-          <div style="display: flex; align-items: center;">
+          <div class="align-items-center">
             <ul>
               <% @conditions.daily_forecasts.each do |forecast| %>
                 <li class="mb-2 align-items-center">
-                  <span class="mr-4">
-                    <%= forecast.starts_at.strftime("%Y-%m-%d") %>
-                  </span>
-
-                  <% if forecast.weather_icon.present? %>
-                    <img class="mr-3" src="https://developer.accuweather.com/sites/default/files/<%= "%02d" % forecast.weather_icon %>-s.png">
-                  <% else %>
-                    <span class="mr-3"><%= forecast.weather_text %></span>
-                  <% end %>
-
-                  <span class="mr-3">
-                    <%= icon 'fa-solid', 'temperature-full' %>
-                    <%= forecast.temperature_min %> &#45; <%= forecast.temperature_max %><%= forecast.temperature_unit %>
-                  </span>
-
-                  <span>
-                    <%= icon 'fa-solid', 'wind' %>
-                    <%= forecast.wind_speed %>
-                    <%= forecast.wind_unit %>
-                    <%= forecast.wind_direction %>
-                  </span>
+                  <%= render 'conditions', conditions: forecast %>
                 </li>
               <% end %>
             </ul>

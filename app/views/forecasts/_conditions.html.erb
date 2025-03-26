@@ -1,0 +1,22 @@
+<span class="mr-4">
+  <% format = conditions.starts_at.is_a?(DateTime) ? "%Y-%m-%d %H:%M %p" : "%Y-%m-%d"  %>
+  <%= conditions.starts_at.strftime(format) %>
+</span>
+
+<% if conditions.weather_icon.present? %>
+  <img class="mr-3" src="https://developer.accuweather.com/sites/default/files/<%= "%02d" % conditions.weather_icon %>-s.png">
+<% else %>
+  <span class="mr-3"><%= conditions.weather_text %></span>
+<% end %>
+
+<span class="mr-3">
+  <%= icon 'fa-solid', 'temperature-full' %>
+  <%= conditions.temperature %><%= conditions.temperature_unit %>
+</span>
+
+<span>
+  <%= icon 'fa-solid', 'wind' %>
+  <%= conditions.wind_speed %>
+  <%= conditions.wind_unit %>
+  <%= conditions.wind_direction %>
+</span>

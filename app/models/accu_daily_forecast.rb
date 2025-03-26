@@ -4,7 +4,7 @@ class AccuDailyForecast
   include RemoteApiModel
 
   attribute :id, :string
-  attribute :starts_at, :datetime
+  attribute :starts_at, :date
   attribute :weather_text, :string
   attribute :weather_icon, :integer
   attribute :temperature_min, :string
@@ -25,7 +25,7 @@ class AccuDailyForecast
     def from_api_data(data)
       new(
         id: data[:epoch_date],
-        starts_at: Time.at(data[:epoch_date]).to_datetime,
+        starts_at: Time.at(data[:epoch_date]).to_date,
         weather_icon: data.dig(:day, :icon),
         weather_text: data.dig(:day, :icon_phrase),
         temperature_min: data.dig(:temperature, :minimum, :value),
@@ -36,5 +36,9 @@ class AccuDailyForecast
         wind_direction: data.dig(:day, :wind, :direction, :localized),
       )
     end
+  end
+
+  def temperature
+    "#{temperature_min} - #{temperature_max}"
   end
 end
