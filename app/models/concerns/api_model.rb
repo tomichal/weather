@@ -20,14 +20,18 @@ module ApiModel
       record
     end
 
-    def find_by(query)
-      result = from_api("#{self::API_HOST}/#{self::API_PATH}", params: { q: query })
-      result.is_a?(Array) ? result.first : result
+    def find_by(query, cache_key: nil)
+      record = from_api("#{self::API_HOST}/#{self::API_PATH}", params: { q: query }, cache_key:)
+
+      return unless record.present?
+
+      record.is_a?(Array) ? record.first : record
+
     end
 
     def where(params: {}, cache_key: nil)
       if params[:id].present?
-        records = from_api("#{self::API_HOST}/#{self::API_PATH}/#{params[:id]}", cache_key:, params: { details: true }, data_key: "DailyForecasts")
+        records = from_api("#{self::API_HOST}/#{self::API_PATH}/#{params[:id]}", params: { details: true }, data_key: "DailyForecasts", cache_key:)
 
         return unless records.present?
 
