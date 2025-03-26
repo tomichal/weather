@@ -30,16 +30,14 @@ module ApiModel
     end
 
     def where(params: {}, cache_key: nil)
-      if params[:id].present?
-        records = from_api("#{self::API_HOST}/#{self::API_PATH}/#{params[:id]}", params: { details: true }, data_key: "DailyForecasts", cache_key:)
+      raise "Invalid search parameters" unless params[:id].present?
 
-        return unless records.present?
+      records = from_api("#{self::API_HOST}/#{self::API_PATH}/#{params[:id]}", params: { details: true }, data_key: "DailyForecasts", cache_key:)
 
-        records.each { |r| r.id = params[:id] }
-        records
-      else
-        raise "Invalid search parameters"
-      end
+      return unless records.present?
+
+      records.each { |r| r.id = params[:id] }
+      records
     end
 
     private
