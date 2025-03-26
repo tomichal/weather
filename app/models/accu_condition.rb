@@ -1,7 +1,7 @@
 require 'http'
 
 class AccuCondition
-  include ApiModel
+  include RemoteApiModel
 
   attr_accessor :location
 

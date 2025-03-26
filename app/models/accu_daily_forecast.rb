@@ -1,7 +1,7 @@
 require 'http'
 
 class AccuDailyForecast
-  include ApiModel
+  include RemoteApiModel
 
   attribute :id, :string
   attribute :starts_at, :datetime

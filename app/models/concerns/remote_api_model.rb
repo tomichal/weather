@@ -1,4 +1,4 @@
-module ApiModel
+module RemoteApiModel
   extend ActiveSupport::Concern
 
   include ActiveModel::Model

@@ -2,7 +2,7 @@
 require 'http'
 
 class AccuLocation
-  include ApiModel
+  include RemoteApiModel
 
   attribute :id, :string
   attribute :primary_postal_code, :string
