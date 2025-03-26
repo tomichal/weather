@@ -40,7 +40,8 @@
           <% if @condition.weather_icon.present? %>
             <img class="icon" src="https://developer.accuweather.com/sites/default/files/<%=  "%02d" % @condition.weather_icon %>-s.png">
           <% end %>
-          <%= @condition.weather_text %>
+          <%= @condition.weather_text %><br/>
+          <%= @condition.is_cached %>
         </p>
       <% else %>
         No forecast found for this location.

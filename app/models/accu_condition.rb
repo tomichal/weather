@@ -4,6 +4,8 @@ class AccuCondition
   include ActiveModel::Model
   include ActiveModel::Attributes
 
+  attr_accessor :is_cached
+
   attribute :observation_at, :datetime
   attribute :weather_text, :string
   attribute :weather_icon, :integer
