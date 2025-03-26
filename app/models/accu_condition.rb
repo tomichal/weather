@@ -70,6 +70,7 @@ class AccuCondition
       new(
         observation_at: Time.at(data[:epoch_time]).to_datetime,
         weather_text: data[:weather_text],
+        weather_icon: data[:weather_icon],
         temperature: data[:temperature][:imperial][:value],
         temperature_unit: data[:temperature][:imperial][:unit],
       )
