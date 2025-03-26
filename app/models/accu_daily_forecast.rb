@@ -22,9 +22,12 @@ class AccuDailyForecast
   class << self
     def where(params = {})
       if params[:id].present?
-        results = from_api("#{self::API_HOST}/#{API_PATH}/#{params[:id]}", { details: true }, "DailyForecasts")
-        results.each { |r| r.id = params[:id] }
-        results
+        records = from_api("#{self::API_HOST}/#{API_PATH}/#{params[:id]}", { details: true }, "DailyForecasts")
+
+        return unless records.present?
+
+        records.each { |r| r.id = params[:id] }
+        records
       else
         raise "Invalid search parameters"
       end

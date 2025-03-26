@@ -22,10 +22,13 @@ class AccuCondition
 
   class << self
     def find(id)
-      result = from_api("#{self::API_HOST}/#{API_PATH}/#{id}", { details: true })
-      result = result.is_a?(Array) ? result.first : result
-      result.id = id
-      result
+      record = from_api("#{self::API_HOST}/#{API_PATH}/#{id}", { details: true })
+
+      return unless record.present?
+
+      record = record.is_a?(Array) ? record.first : record
+      record.id = id
+      record
     end
 
     def from_api_data(data)

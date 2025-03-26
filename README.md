@@ -1,4 +1,8 @@
 # TODO
+* Extract the caching into the models
+* Extract the views partials
+* Ensure weather conditions cached by zip code 
+* Tests
 * Safe accuweather api key? 
 * Safe google maps api key? config/importmap.rb:10
 
