@@ -21,20 +21,16 @@ class AccuCondition
 
   class << self
     def find(id)
-      response = client.get("#{self::API_HOST}/#{API_PATH}/#{id}", params: { apikey: self::API_KEY })
-      result = from_response(response)
+      result = from_api("#{self::API_HOST}/#{API_PATH}/#{id}")
       result.is_a?(Array) ? result.first : result
     end
 
-
-    #   attribute :weather_icon, :integer
     #   attribute :has_precipitation, :boolean
     #   attribute :precipitation_type, :string
     #   attribute :is_day_time, :boolean
     #   attribute :temperature, :float
     #   attribute :temperature_unit, :string
     #
-    #   #   "WeatherIcon": 2,
     #   #   "HasPrecipitation": false,
     #   # "PrecipitationType": null,
     #   # "IsDayTime": true,
@@ -45,7 +41,7 @@ class AccuCondition
     #   #     "UnitType": 17
     #   #   },
     #   # },
-    def from_api(data)
+    def from_api_data(data)
       new(
         observation_at: Time.at(data[:epoch_time]).to_datetime,
         weather_text: data[:weather_text],

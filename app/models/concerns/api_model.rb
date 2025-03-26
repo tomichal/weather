@@ -10,11 +10,12 @@ module ApiModel
   API_KEY = Rails.application.credentials.accuweather_api_key
 
   class_methods do
-    def from_response(response)
+    def from_api(path, params = {})
+      response = client.get(path, params: params.merge(apikey: self::API_KEY))
       if response.status.success?
         data = response.parse(:json)
         data = [data] if data.is_a?(Hash)
-        data.map { |d| from_api(d.deep_transform_keys { |key| key.to_s.underscore.to_sym }) }
+        data.map { |d| from_api_data(d.deep_transform_keys { |key| key.to_s.underscore.to_sym }) }
       else
         raise "API search request failed: #{response.status} - #{response.body}"
       end

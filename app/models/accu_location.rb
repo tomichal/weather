@@ -20,12 +20,11 @@ class AccuLocation
 
   class << self
     def find_by(query)
-      response = client.get("#{self::API_HOST}/#{API_PATH}", params: { q: query, apikey: self::API_KEY })
-      result = from_response(response)
+      result = from_api("#{self::API_HOST}/#{API_PATH}", { q: query })
       result.is_a?(Array) ? result.first : result
     end
 
-    def from_api(data)
+    def from_api_data(data)
       new(
         id: data[:key],
         primary_postal_code: data[:primary_postal_code],
