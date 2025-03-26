@@ -7,9 +7,7 @@ class ForecastsController < ApplicationController
 
     @location = AccuLocation.find_by("#{@search_query.latitude},#{@search_query.longitude}")
 
-    return unless @location&.valid?
-
-    @condition = AccuCondition.find(@location.id)
+    @conditions = @location.conditions
   end
 
   private

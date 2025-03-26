@@ -10,10 +10,11 @@ module ApiModel
   API_KEY = Rails.application.credentials.accuweather_api_key
 
   class_methods do
-    def from_api(path, params = {}, data_key = nil)
-      cache_key = "/#{self.model_name.collection}/#{path}/#{params.to_query}"
-      is_cached = true if Rails.cache.exist?(cache_key)
-      data = Rails.cache.fetch(cache_key, expires_in: 30.minutes) do
+    def from_api(path, params: {}, cache_key: nil, data_key: nil)
+      default_cache_key = "#{path}/#{params.to_query}"
+      full_cache_key = "/#{self.model_name.collection}/#{cache_key || default_cache_key}"
+      is_cached = true if Rails.cache.exist?(full_cache_key)
+      data = Rails.cache.fetch(full_cache_key, expires_in: 30.minutes) do
         response = client.get(path, params: params.merge(apikey: self::API_KEY))
         if response.status.success?
           data = response.parse(:json)

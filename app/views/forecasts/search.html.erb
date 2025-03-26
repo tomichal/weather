@@ -30,12 +30,12 @@
     <span>Type in address to get forecast for.</span>
   <% else %>
     <% if @location.present? %>
-      <% if @condition.present? %>
+      <% if @conditions.present? %>
         <div class="mb-2">
           <%= icon 'fa-solid', 'map' %>
           <%= @location.primary_postal_code %>, <%= @location.country %>
           <span class="ml-4 mr-2">
-            <% if @condition.is_cached %>
+            <% if @conditions.is_cached %>
               <%= icon 'fa-solid', 'database mr-1' %>(cached)
             <% end %>
           </span>
@@ -48,22 +48,22 @@
           </h3>
           <div class="align-items-center">
             <span class="mr-4">
-              <%= @condition.starts_at.strftime("%Y-%m-%d %H:%M %p") %>
+              <%= @conditions.starts_at.strftime("%Y-%m-%d %H:%M %p") %>
             </span>
-            <% if @condition.weather_icon.present? %>
-              <img class="mr-3" src="https://developer.accuweather.com/sites/default/files/<%= "%02d" % @condition.weather_icon %>-s.png">
+            <% if @conditions.weather_icon.present? %>
+              <img class="mr-3" src="https://developer.accuweather.com/sites/default/files/<%= "%02d" % @conditions.weather_icon %>-s.png">
             <% else %>
-              <span class="mr-3"><%= @condition.weather_text %></span>
+              <span class="mr-3"><%= @conditions.weather_text %></span>
             <% end %>
             <span class="mr-3">
               <%= icon 'fa-solid', 'temperature-full' %>
-              <%= @condition.temperature %><%= @condition.temperature_unit %>
+              <%= @conditions.temperature %><%= @conditions.temperature_unit %>
             </span>
             <span>
               <%= icon 'fa-solid', 'wind' %>
-              <%= @condition.wind_speed %>
-              <%= @condition.wind_unit %>
-              <%= @condition.wind_direction %>
+              <%= @conditions.wind_speed %>
+              <%= @conditions.wind_unit %>
+              <%= @conditions.wind_direction %>
             </span>
           </div>
         </div>
@@ -75,7 +75,7 @@
           </h3>
           <div style="display: flex; align-items: center;">
             <ul>
-              <% @condition.daily_forecasts.each do |forecast| %>
+              <% @conditions.daily_forecasts.each do |forecast| %>
                 <li class="mb-2 align-items-center">
                   <span class="mr-4">
                     <%= forecast.starts_at.strftime("%Y-%m-%d") %>

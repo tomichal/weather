@@ -20,7 +20,7 @@ class AccuLocation
 
   class << self
     def find_by(query)
-      result = from_api("#{self::API_HOST}/#{API_PATH}", { q: query })
+      result = from_api("#{self::API_HOST}/#{API_PATH}", params: { q: query })
       result.is_a?(Array) ? result.first : result
     end
 
@@ -33,5 +33,9 @@ class AccuLocation
         longitude: data[:geo_position][:longitude]
       )
     end
+  end
+
+  def conditions
+    @conditions ||= AccuCondition.find(id, cache_key: primary_postal_code).tap { |c| c.location = self }
   end
 end

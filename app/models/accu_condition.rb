@@ -3,6 +3,8 @@ require 'http'
 class AccuCondition
   include ApiModel
 
+  attr_accessor :location
+
   attribute :id, :string
   attribute :starts_at, :datetime
   attribute :weather_text, :string
@@ -21,8 +23,8 @@ class AccuCondition
   API_PATH = "currentconditions/v1"
 
   class << self
-    def find(id)
-      record = from_api("#{self::API_HOST}/#{API_PATH}/#{id}", { details: true })
+    def find(id, cache_key: nil)
+      record = from_api("#{self::API_HOST}/#{API_PATH}/#{id}", params: { details: true }, cache_key:)
 
       return unless record.present?
 
@@ -46,6 +48,6 @@ class AccuCondition
   end
 
   def daily_forecasts
-    @daily_forecasts ||= AccuDailyForecast.where(id: id)
+    @daily_forecasts ||= AccuDailyForecast.where(params: { id: id }, cache_key: location.primary_postal_code)
   end
 end

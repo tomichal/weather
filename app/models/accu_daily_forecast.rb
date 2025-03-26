@@ -20,9 +20,9 @@ class AccuDailyForecast
   API_PATH = "forecasts/v1/daily/5day"
 
   class << self
-    def where(params = {})
+    def where(params: {}, cache_key: nil)
       if params[:id].present?
-        records = from_api("#{self::API_HOST}/#{API_PATH}/#{params[:id]}", { details: true }, "DailyForecasts")
+        records = from_api("#{self::API_HOST}/#{API_PATH}/#{params[:id]}", cache_key:, params: { details: true }, data_key: "DailyForecasts")
 
         return unless records.present?
 
