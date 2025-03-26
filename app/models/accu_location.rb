@@ -2,10 +2,7 @@
 require 'http'
 
 class AccuLocation
-  include ActiveModel::Model
-  include ActiveModel::Attributes
-
-  attr_accessor :is_cached
+  include ApiModel
 
   attribute :id, :string
   attribute :primary_postal_code, :string
@@ -19,13 +16,11 @@ class AccuLocation
   validates :latitude, presence: true
   validates :longitude, presence: true
 
-  API_HOST = "https://dataservice.accuweather.com"
   API_PATH = "locations/v1/cities/geoposition/search"
-  API_KEY = Rails.application.credentials.accuweather_api_key
 
   class << self
     def find_by(query)
-      response = client.get("#{API_HOST}/#{API_PATH}", params: { q: query, apikey: API_KEY })
+      response = client.get("#{self::API_HOST}/#{API_PATH}", params: { q: query, apikey: self::API_KEY })
 
       if response.status.success?
         data = response.parse(:json)

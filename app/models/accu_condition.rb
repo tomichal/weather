@@ -1,10 +1,7 @@
 require 'http'
 
 class AccuCondition
-  include ActiveModel::Model
-  include ActiveModel::Attributes
-
-  attr_accessor :is_cached
+  include ApiModel
 
   attribute :observation_at, :datetime
   attribute :weather_text, :string
@@ -20,13 +17,11 @@ class AccuCondition
   validates :temperature, presence: true
   validates :temperature_unit, presence: true
 
-  API_HOST = "https://dataservice.accuweather.com"
   API_PATH = "currentconditions/v1"
-  API_KEY = Rails.application.credentials.accuweather_api_key
 
   class << self
     def find(id)
-      response = client.get("#{API_HOST}/#{API_PATH}/#{id}", params: { apikey: API_KEY })
+      response = client.get("#{self::API_HOST}/#{API_PATH}/#{id}", params: { apikey: self::API_KEY })
 
       if response.status.success?
         data = response.parse(:json)
