@@ -1,7 +1,5 @@
 # TODO
-* Extract the caching into the models
-* Extract the views partials
-* Ensure weather conditions cached by zip code 
+* Extract the views partials 
 * Tests
 * Squash all commits before sharing the repo
 * Safe accuweather api key? 
