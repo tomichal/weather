@@ -46,8 +46,6 @@ class AccuCondition
     #   #   },
     #   # },
     def from_api(data)
-      data = data.deep_transform_keys { |key| key.to_s.underscore.to_sym }
-
       new(
         observation_at: Time.at(data[:epoch_time]).to_datetime,
         weather_text: data[:weather_text],

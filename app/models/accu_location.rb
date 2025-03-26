@@ -26,8 +26,6 @@ class AccuLocation
     end
 
     def from_api(data)
-      data = data.deep_transform_keys { |key| key.to_s.underscore.to_sym }
-
       new(
         id: data[:key],
         primary_postal_code: data[:primary_postal_code],

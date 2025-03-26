@@ -13,11 +13,8 @@ module ApiModel
     def from_response(response)
       if response.status.success?
         data = response.parse(:json)
-        if data.is_a?(Array)
-          data.map { |d| from_api(d) }
-        else
-          from_api(data)
-        end
+        data = [data] if data.is_a?(Hash)
+        data.map { |d| from_api(d.deep_transform_keys { |key| key.to_s.underscore.to_sym }) }
       else
         raise "API search request failed: #{response.status} - #{response.body}"
       end
