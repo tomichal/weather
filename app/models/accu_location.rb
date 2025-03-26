@@ -5,13 +5,13 @@ class AccuLocation
   include ActiveModel::Model
   include ActiveModel::Attributes
 
-  attribute :key, :string
+  attribute :id, :string
   attribute :primary_postal_code, :string
   attribute :country, :string
   attribute :latitude, :float
   attribute :longitude, :float
 
-  validates :key, presence: true
+  validates :id, presence: true
   validates :primary_postal_code, presence: true
   validates :country, presence: true
   validates :latitude, presence: true
@@ -51,7 +51,7 @@ class AccuLocation
       data = data.deep_transform_keys { |key| key.to_s.underscore.to_sym }
 
       new(
-        key: data[:key],
+        id: data[:key],
         primary_postal_code: data[:primary_postal_code],
         country: data.dig(:country, :id),
         latitude: data[:geo_position][:latitude],

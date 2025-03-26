@@ -3,7 +3,10 @@ class ForecastsController < ApplicationController
   def search
     @search_query = SearchQuery.new(search_query_params)
     if @search_query.valid?
-      @accu_location = AccuLocation.find_by("#{@search_query.latitude},#{@search_query.longitude}")
+      @location = AccuLocation.find_by("#{@search_query.latitude},#{@search_query.longitude}")
+      if @location&.valid?
+        @condition = AccuCondition.find(@location.id)
+      end
     end
   end
 

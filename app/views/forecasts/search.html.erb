@@ -31,8 +31,14 @@
   </h3>
 
   <h3>
-    <% if @accu_location.present? %>
-      AccuWeather location: <%= @accu_location.key %>, <%= @accu_location.primary_postal_code %>, <%= @accu_location.country %>
+    <% if @location.present? %>
+      <p>
+        AccuWeather location: <%= @location.id %>, <%= @location.primary_postal_code %>, <%= @location.country %>
+      </p>
+      <p>
+        <%= @condition.weather_text %>
+      </p>
+
     <% else %>
       Location for the forecast can't be found.
     <% end %>
