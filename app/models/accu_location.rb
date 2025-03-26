@@ -5,6 +5,8 @@ class AccuLocation
   include ActiveModel::Model
   include ActiveModel::Attributes
 
+  attr_accessor :is_cached
+
   attribute :id, :string
   attribute :primary_postal_code, :string
   attribute :country, :string
