@@ -30,17 +30,20 @@
     <%= @search_query.latitude %>, <%= @search_query.longitude %>
   </h3>
 
-  <h3>
+  <div>
     <% if @location.present? %>
       <p>
         AccuWeather location: <%= @location.id %>, <%= @location.primary_postal_code %>, <%= @location.country %>
       </p>
-      <p>
-        <%= @condition.weather_text %>
-      </p>
-
+      <% if @condition.present? %>
+        <p>
+          <%= @condition.weather_text %>
+        </p>
+      <% else %>
+        No forecast found for this location.
+      <% end %>
     <% else %>
       Location for the forecast can't be found.
     <% end %>
-  </h3>
+  </div>
 <% end %>
