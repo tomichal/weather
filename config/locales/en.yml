@@ -30,7 +30,7 @@
 en:
   time:
     formats:
-      default: "%Y-%m-%d %H:%M"
+      default: "%b %d at %l:%M%P"
   date:
     formats:
-      default: "%Y-%m-%d"
+      default: "%b %d"
