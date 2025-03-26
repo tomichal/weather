@@ -1,6 +1,5 @@
 <span class="mr-4">
-  <% format = conditions.starts_at.is_a?(DateTime) ? "%Y-%m-%d %H:%M %p" : "%Y-%m-%d"  %>
-  <%= conditions.starts_at.strftime(format) %>
+  <%= l conditions.starts_at, format: :default %>
 </span>
 
 <% if conditions.weather_icon.present? %>
