@@ -22,5 +22,16 @@ module ApiModel
         raise "API search request failed: #{response.status} - #{response.body}"
       end
     end
+
+    private
+
+    def client
+      HTTP.timeout(connect: 5, read: 10)
+          .use(:auto_inflate)
+          .headers(
+            accept: "application/json",
+            accept_encoding: "gzip",
+            )
+    end
   end
 end

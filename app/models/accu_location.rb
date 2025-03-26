@@ -25,16 +25,6 @@ class AccuLocation
       result.is_a?(Array) ? result.first : result
     end
 
-    # Optional: If you need to handle timeout or other HTTP options
-    def client
-      HTTP.timeout(connect: 5, read: 10)
-          .use(:auto_inflate)
-          .headers(
-            accept: "application/json",
-            accept_encoding: "gzip",
-          )
-    end
-
     def from_api(data)
       data = data.deep_transform_keys { |key| key.to_s.underscore.to_sym }
 
