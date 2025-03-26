@@ -19,10 +19,7 @@ class AccuLocation
   API_PATH = "locations/v1/cities/geoposition/search"
 
   class << self
-    def find_by(query)
-      result = from_api("#{self::API_HOST}/#{API_PATH}", params: { q: query })
-      result.is_a?(Array) ? result.first : result
-    end
+    private
 
     def from_api_data(data)
       new(

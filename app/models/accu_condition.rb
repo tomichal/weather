@@ -23,15 +23,7 @@ class AccuCondition
   API_PATH = "currentconditions/v1"
 
   class << self
-    def find(id, cache_key: nil)
-      record = from_api("#{self::API_HOST}/#{API_PATH}/#{id}", params: { details: true }, cache_key:)
-
-      return unless record.present?
-
-      record = record.is_a?(Array) ? record.first : record
-      record.id = id
-      record
-    end
+    private
 
     def from_api_data(data)
       new(

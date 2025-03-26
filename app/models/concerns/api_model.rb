@@ -10,6 +10,36 @@ module ApiModel
   API_KEY = Rails.application.credentials.accuweather_api_key
 
   class_methods do
+    def find(id, cache_key: nil)
+      record = from_api("#{self::API_HOST}/#{self::API_PATH}/#{id}", params: { details: true }, cache_key:)
+
+      return unless record.present?
+
+      record = record.is_a?(Array) ? record.first : record
+      record.id = id
+      record
+    end
+
+    def find_by(query)
+      result = from_api("#{self::API_HOST}/#{self::API_PATH}", params: { q: query })
+      result.is_a?(Array) ? result.first : result
+    end
+
+    def where(params: {}, cache_key: nil)
+      if params[:id].present?
+        records = from_api("#{self::API_HOST}/#{self::API_PATH}/#{params[:id]}", cache_key:, params: { details: true }, data_key: "DailyForecasts")
+
+        return unless records.present?
+
+        records.each { |r| r.id = params[:id] }
+        records
+      else
+        raise "Invalid search parameters"
+      end
+    end
+
+    private
+
     def from_api(path, params: {}, cache_key: nil, data_key: nil)
       default_cache_key = "#{path}/#{params.to_query}"
       full_cache_key = "/#{self.model_name.collection}/#{cache_key || default_cache_key}"
@@ -32,8 +62,6 @@ module ApiModel
         from_api_data(underscored_data).tap { |o| o.is_cached = is_cached }
       end
     end
-
-    private
 
     def client
       HTTP.timeout(connect: 5, read: 10)
