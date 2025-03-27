@@ -51,7 +51,7 @@ app/models/concerns/remote_api_model.rb
 # Views
 app/views/forecasts/_conditions.html.erb
 app/views/forecasts/_search_query.html.erb
-app/views/forecasts/search.html.erb
+app/views/forecasts/index.html.erb
 app/views/layouts/application.html.erb
 ```
 
