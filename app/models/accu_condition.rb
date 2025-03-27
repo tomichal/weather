@@ -40,6 +40,6 @@ class AccuCondition
   end
 
   def daily_forecasts
-    @daily_forecasts ||= AccuDailyForecast.where(params: { id: id }, cache_key: location.primary_postal_code)
+    @daily_forecasts ||= AccuDailyForecast.where(params: { id: id }, data_key: "DailyForecasts", cache_key: location.primary_postal_code)
   end
 end

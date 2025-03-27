@@ -29,20 +29,19 @@ module RemoteApiModel
 
     end
 
-    def where(params: {}, cache_key: nil)
+    def where(params: {}, data_key: nil, cache_key: nil)
       raise "Invalid search parameters" unless params[:id].present?
 
-      from_api("#{self::API_HOST}/#{self::API_PATH}/#{params[:id]}", params: { details: true }, data_key: "DailyForecasts", cache_key:)
+      from_api("#{self::API_HOST}/#{self::API_PATH}/#{params[:id]}", params: { details: true }, data_key:, cache_key:)
     end
 
     private
 
-    def from_api(path, params: {}, cache_key: nil, data_key: nil)
-      default_cache_key = "#{path}/#{params.to_query}"
-      full_cache_key = "/#{self.model_name.collection}/#{cache_key || default_cache_key}"
+    def from_api(uri, params: {}, cache_key: nil, data_key: nil)
+      full_cache_key = full_cache_key(uri, params, cache_key)
       is_cached = true if Rails.cache.exist?(full_cache_key)
       data = Rails.cache.fetch(full_cache_key, expires_in: 30.minutes) do
-        response = client.get(path, params: params.merge(apikey: self::API_KEY))
+        response = client.get(uri, params: params.merge(apikey: self::API_KEY))
         if response.status.success?
           data = response.parse(:json)
           data_key.present? ? data[data_key] : data
@@ -62,11 +61,14 @@ module RemoteApiModel
 
     def client
       HTTP.timeout(connect: 5, read: 10)
-          .use(:auto_inflate)
           .headers(
-            accept: "application/json",
-            accept_encoding: "gzip",
+            accept: "application/json"
           )
     end
+
+    def full_cache_key(uri, params, cache_key)
+      "/#{self.model_name.collection}/#{cache_key || "#{URI.parse(uri).path}/#{params.to_query}"}"
+    end
   end
+
 end

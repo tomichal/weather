@@ -33,6 +33,8 @@ class AccuLocation
   end
 
   def conditions
-    @conditions ||= AccuCondition.find(id, cache_key: primary_postal_code).tap { |c| c.location = self }
+    @conditions ||= AccuCondition.find(id, cache_key: primary_postal_code).tap do |condition|
+      condition.location = self
+    end
   end
 end
