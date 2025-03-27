@@ -9,7 +9,6 @@ export default class extends Controller {
             return
         }
 
-        // TODO: IMPORTANT! must rewrite it to the new autocomplete google API. Don't want to share my api key in the js code.
         this.autocomplete = new google.maps.places.Autocomplete(this.searchTermTarget, {
             types: ['address'],
             fields: ["formatted_address", "geometry"]
