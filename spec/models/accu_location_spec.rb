@@ -34,7 +34,7 @@ RSpec.describe AccuLocation, type: :model do
 
   describe '.conditions' do
     let(:id) { '2627449' }
-    let(:location) { VCR.use_cassette('accu_locations/find_by_coordinates') { AccuLocation.find_by(coordinates) } }
+    let(:location) { build(:accu_location, id: id) }
 
     it "sets the attributes from API response" do
       VCR.use_cassette('accu_locations/conditions') do
