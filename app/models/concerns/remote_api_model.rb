@@ -10,8 +10,8 @@ module RemoteApiModel
   API_KEY = Rails.application.credentials.accuweather_api_key
 
   class_methods do
-    def find(id, cache_key: nil)
-      record = from_api("#{self::API_HOST}/#{self::API_PATH}/#{id}", params: { details: true }, cache_key:)
+    def find(id, data_key: nil, cache_key: nil)
+      record = from_api("#{self::API_HOST}/#{self::API_PATH}/#{id}", params: { details: true }, data_key:, cache_key:)
 
       return unless record.present?
 
@@ -20,8 +20,8 @@ module RemoteApiModel
       record
     end
 
-    def find_by(query, cache_key: nil)
-      record = from_api("#{self::API_HOST}/#{self::API_PATH}", params: { q: query }, cache_key:)
+    def find_by(query, data_key: nil, cache_key: nil)
+      record = from_api("#{self::API_HOST}/#{self::API_PATH}", params: { q: query }, data_key:, cache_key:)
 
       return unless record.present?
 
