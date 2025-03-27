@@ -14,7 +14,7 @@ For the sake of simplicity I implemented the back-end and UI using a single Rail
 2. The free version of the Accuweather API has a limitation of 50 requests per day, so hopefully that will not be exceeded during the evaluation of this project.
 
 ## Example of how the app looks like
-<img src="screenshot.png" alt="screenshot" width="500">
+![index.png](index.png)
 
 
 ## Run the app locally
