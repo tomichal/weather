@@ -15,7 +15,7 @@ For the sake of simplicity I implemented the back-end and UI using a single Rail
 
 ## Potential improvements
 * To make it more scalable, we could implement a mechanism where weather data is pulled in the background in regular intervals for a given location, for locations perhaps most popular according to the search requests.
-    We would need to store search requests to group them by popularity and implement a background jobs (likely using ActiveJob) for caching the forecasts in the background. 
+    We would need to store search requests to group them by popularity and implement background jobs (likely using ActiveJob) for caching weather data in the background. 
 * Use ActionCable to refresh the forecast without needing to reload the browser window.
 * Pull weather from multiple sources and incorporate the differences in the UI. E.g.: show where the forecasts are radically different?
 
